@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Currency Exchange</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+        <script src="{{url_for('static', filename='getData.js')}}"></script>
+        <div class="container">
+        <h1>Currency Exchange</h1>
+        <div class="lg-col-2 sm-col-3" style="float: left;">
+            <label for="fromCurrency">From</label>
+            <input list="fromCurrencies" id="fromCurrency" name="fromCurrency" value="{{ fromValue if fromValue else '' }}"/>
+            <datalist id="fromCurrencies">
+            {% for code in data['symbols'] %}
+            <option value="{{code}}">{{ data['symbols'][code] }} </option>
+            {% endfor %}
+        </datalist>
+        </div>
+        <div class="lg-col-2 sm-col-3" style="margin-left: 10px ;">
+                <label for="toCurrency">To</label>
+                <input list="toCurrencies" id="toCurrency" name="toCurrency" onchange="getDataOnSelect()" value="{{ toValue if toValue else '' }}"/>
+                <datalist id="toCurrencies">
+                {% for code in data['symbols'] %}
+                <option value="{{code}}">{{ data['symbols'][code] }} </option>
+                {% endfor %}
+            </datalist>
+        </div>
+        {% if exchangeRate %}
+        <h4>Exchange rate is : {{ exchangeRate }}</h2>
+        <div class="lg-col-2 sm-col-1" style="float: left;">
+            <input type="text" value="0"/>
+        </div>
+        <div class="lg-col-2 sm-col-1" style="float: left;">
+                <input type="text" value="0"/>
+        </div>
+        {% endif %}
+
+    </body>
+</html>
